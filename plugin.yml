@@ -1,0 +1,10 @@
+---
+name: xendevtools2
+main: xenialdan\xendevtools2\Loader
+version: 0.0.1
+api: [ "4.0.0" ]
+load: POSTWORLD
+authors:
+  - XenialDan
+description: pm4 xenial tests
+...
