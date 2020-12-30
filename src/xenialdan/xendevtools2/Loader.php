@@ -32,9 +32,12 @@ class Loader extends PluginBase implements Listener
 
 	public function onLoad()
 	{
-		/*EntityFactory::getInstance()->register(NPCBase::class, function (World $world, CompoundTag $nbt): NPCBase {
+		EntityFactory::getInstance()->register(NPCBase::class, function (World $world, CompoundTag $nbt): NPCBase {
 			return new NPCBase(EntityDataHelper::parseLocation($nbt, $world), null);
-		}, ['NPCBase', 'npc:base'], EntityLegacyIds::NPC);*/
+		}, ['NPCBase', 'npc:base'], EntityLegacyIds::NPC);
+		EntityFactory::getInstance()->register(NPCHuman::class, function (World $world, CompoundTag $nbt): NPCHuman {
+			return new NPCHuman(EntityDataHelper::parseLocation($nbt, $world), null);
+		}, ['NPCHuman', 'npc:human'], EntityLegacyIds::PLAYER);
 		EntityFactory::getInstance()->register(TestFallingBlock::class, function (World $world, CompoundTag $nbt): TestFallingBlock {
 			return new TestFallingBlock(EntityDataHelper::parseLocation($nbt, $world), TestFallingBlock::parseBlockNBT(BlockFactory::getInstance(), $nbt), $nbt);
 		}, ['TestFallingBlock', 'xenialdevtools2:testfallingblock'], EntityLegacyIds::FALLING_BLOCK);
@@ -63,7 +66,8 @@ class Loader extends PluginBase implements Listener
 
 	public function onEnable(): void
 	{
-		$this->getServer()->getPluginManager()->registerEvents(new TestListener(), $this);
+		//$this->getServer()->getPluginManager()->registerEvents(new TestMCStructureListener(), $this);
+		$this->getServer()->getPluginManager()->registerEvents(new TestAnimationsListener(), $this);
 		/*NpcDialog::register($this);
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 

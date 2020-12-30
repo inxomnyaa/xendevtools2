@@ -14,7 +14,7 @@ use pocketmine\Server;
 use pocketmine\utils\TextFormat as TF;
 use xenialdan\libstructure\format\MCStructure;
 
-class TestListener implements Listener
+class TestMCStructureListener implements Listener
 {
 	public function onJoin(PlayerJoinEvent $event)
 	{
