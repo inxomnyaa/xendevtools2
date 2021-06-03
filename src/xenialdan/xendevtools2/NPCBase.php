@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace xenialdan\xendevtools2;
 
 use pocketmine\entity\Entity;
+use pocketmine\entity\EntitySizeInfo;
 use pocketmine\entity\Living;
 use pocketmine\entity\Location;
 use pocketmine\event\entity\EntityDamageEvent;
@@ -31,8 +32,6 @@ class NPCBase extends Living
 	/** @var NPCInventory */
 	protected $inventory;
 
-	public $width = 0.6;
-	public $height = 1.8;
 	public $eyeHeight = 1.62;
 
 	/** @var bool */
@@ -96,6 +95,11 @@ class NPCBase extends Living
 	public function getName(): string
 	{
 		return "NPC#" . spl_object_id($this);
+	}
+
+	protected function getInitialSizeInfo(): EntitySizeInfo
+	{
+		return new EntitySizeInfo(1.8, 0.6, 1.62);
 	}
 
 	protected function syncNetworkData(EntityMetadataCollection $properties): void

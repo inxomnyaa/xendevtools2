@@ -38,7 +38,7 @@ class TestFallingBlock extends FallingBlock
 		$pk->attributes = array_map(function (Attribute $attr): NetworkAttribute {
 			return new NetworkAttribute($attr->getId(), $attr->getMinValue(), $attr->getMaxValue(), $attr->getValue(), $attr->getDefaultValue());
 		}, $this->attributeMap->getAll());
-		$pk->metadata = $this->getSyncedNetworkData(false);
+		$pk->metadata = $this->getAllNetworkData();
 		$pk->links = array_values($this->links);
 
 		$player->getNetworkSession()->sendDataPacket($pk);

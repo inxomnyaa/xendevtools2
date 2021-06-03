@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace xenialdan\xendevtools2;
 
 use Closure;
+use muqsit\invmenu\InvMenuHandler;
 use pocketmine\block\BlockFactory;
 use pocketmine\data\bedrock\EntityLegacyIds;
 use pocketmine\entity\EntityDataHelper;
@@ -30,7 +31,7 @@ class Loader extends PluginBase implements Listener
 		return self::$instance;
 	}
 
-	public function onLoad()
+	public function onLoad(): void
 	{
 		EntityFactory::getInstance()->register(NPCBase::class, function (World $world, CompoundTag $nbt): NPCBase {
 			return new NPCBase(EntityDataHelper::parseLocation($nbt, $world), null);
@@ -66,8 +67,12 @@ class Loader extends PluginBase implements Listener
 
 	public function onEnable(): void
 	{
-		//$this->getServer()->getPluginManager()->registerEvents(new TestMCStructureListener(), $this);
-		$this->getServer()->getPluginManager()->registerEvents(new TestAnimationsListener(), $this);
+		if (!InvMenuHandler::isRegistered()) {
+			InvMenuHandler::register($this);
+		}
+		TestLlamaInventoryListener::registerCustomMenuTypes();
+
+		$this->getServer()->getPluginManager()->registerEvents(new TestLlamaInventoryListener(), $this);
 		/*NpcDialog::register($this);
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 

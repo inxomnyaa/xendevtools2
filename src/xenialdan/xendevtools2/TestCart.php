@@ -7,6 +7,7 @@ namespace xenialdan\xendevtools2;
 use pocketmine\block\Block;
 use pocketmine\entity\Attribute;
 use pocketmine\entity\Entity;
+use pocketmine\entity\EntitySizeInfo;
 use pocketmine\entity\Location;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\network\mcpe\convert\RuntimeBlockMapping;
@@ -26,9 +27,6 @@ class TestCart extends Entity
 	{
 		return EntityIds::MINECART;
 	}
-
-	public $width = 0.98;
-	public $height = 0.98;
 
 	/** @var EntityLink[] */
 	public $links = [];
@@ -58,7 +56,7 @@ class TestCart extends Entity
 		$pk->attributes = array_map(function (Attribute $attr): NetworkAttribute {
 			return new NetworkAttribute($attr->getId(), $attr->getMinValue(), $attr->getMaxValue(), $attr->getValue(), $attr->getDefaultValue());
 		}, $this->attributeMap->getAll());
-		$pk->metadata = $this->getSyncedNetworkData(false);
+		$pk->metadata = $this->getAllNetworkData();
 		$pk->links = array_values($this->links);
 
 		$player->getNetworkSession()->sendDataPacket($pk);
@@ -105,11 +103,16 @@ class TestCart extends Entity
 					}
 				}
 			}
-			$pos = $this->location->add(-$this->width / 2, $this->height, -$this->width / 2)->floor();
+			$pos = $this->location->add(-$this->size->getWidth() / 2, $this->size->getHeight(), -$this->size->getWidth() / 2)->floor();
 			$this->block->position($world, $pos->x, $pos->y, $pos->z);
 		}
 
 		return $hasUpdate;
+	}
+
+	protected function getInitialSizeInfo(): EntitySizeInfo
+	{
+		return new EntitySizeInfo(0.98, 0.98, 0.0);
 	}
 
 }

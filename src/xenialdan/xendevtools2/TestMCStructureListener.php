@@ -27,7 +27,7 @@ class TestMCStructureListener implements Listener
 				if ($entity instanceof TestCart || $entity instanceof TestFallingBlock) $entity->close();
 			}
 			$spawn = $world->getSafeSpawn()->asVector3();
-			$structureFiles = glob(Loader::getInstance()->getDataFolder() . 'structures' . DIRECTORY_SEPARATOR . "*.mcstructure");
+			$structureFiles = glob(Loader::getInstance()->getDataFolder() . 'assets' . DIRECTORY_SEPARATOR . "*.mcstructure");
 			if ($structureFiles !== false)
 				foreach ($structureFiles as $file) {
 					$player->getServer()->getAsyncPool()->submitTask(new class($file, $world->getId()) extends AsyncTask {
