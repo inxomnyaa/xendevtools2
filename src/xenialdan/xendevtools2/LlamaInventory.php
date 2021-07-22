@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace xenialdan\xendevtools2;
 
 use muqsit\invmenu\inventory\InvMenuInventory;
+use pocketmine\inventory\SimpleInventory;
 
-class LlamaInventory extends InvMenuInventory
+class LlamaInventory extends SimpleInventory /*implements BlockInventory*/
 {
 	public function createInventory(): InvMenuInventory
 	{

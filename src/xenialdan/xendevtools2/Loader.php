@@ -45,6 +45,9 @@ class Loader extends PluginBase implements Listener
 		EntityFactory::getInstance()->register(TestCart::class, function (World $world, CompoundTag $nbt): TestCart {
 			return new TestCart(EntityDataHelper::parseLocation($nbt, $world), TestFallingBlock::parseBlockNBT(BlockFactory::getInstance(), $nbt), $nbt);
 		}, ['TestCart', 'xenialdevtools2:testcart'], EntityLegacyIds::MINECART);
+		EntityFactory::getInstance()->register(AreaEffectCloudEntity::class, function (World $world, CompoundTag $nbt): AreaEffectCloudEntity {
+			return new AreaEffectCloudEntity(EntityDataHelper::parseLocation($nbt, $world), $nbt);
+		}, ['TestAEC', 'xenialdevtools2:aec'], EntityLegacyIds::AREA_EFFECT_CLOUD);
 		self::$instance = $this;
 
 		#$rtbm = RuntimeBlockMapping::getInstance();
@@ -70,9 +73,10 @@ class Loader extends PluginBase implements Listener
 		if (!InvMenuHandler::isRegistered()) {
 			InvMenuHandler::register($this);
 		}
-		TestLlamaInventoryListener::registerCustomMenuTypes();
+		#TestLlamaInventoryListener::registerCustomMenuTypes();
 
-		$this->getServer()->getPluginManager()->registerEvents(new TestLlamaInventoryListener(), $this);
+		$this->getServer()->getPluginManager()->registerEvents(new TestAECListener(), $this);
+		$this->getServer()->getPluginManager()->registerEvents(new EnableEduAndExperimentalListener(), $this);
 		/*NpcDialog::register($this);
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 
