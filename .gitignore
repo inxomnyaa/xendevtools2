@@ -1,1 +1,6 @@
 .idea/
+/src/xenialdan/xendevtools2/RegisterCustomEntitiesListener.php
+/src/xenialdan/xendevtools2/TestNGLogIcons.php
+/src/xenialdan/xendevtools2/TestRacesEffects.php
+/src/xenialdan/xendevtools2/TestSpawnNGNPCListener.php
+/src/xenialdan/xendevtools2/NPCBedwars.php

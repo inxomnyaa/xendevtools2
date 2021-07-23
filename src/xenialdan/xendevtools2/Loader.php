@@ -77,6 +77,7 @@ class Loader extends PluginBase implements Listener
 
 		$this->getServer()->getPluginManager()->registerEvents(new TestAECListener(), $this);
 		$this->getServer()->getPluginManager()->registerEvents(new EnableEduAndExperimentalListener(), $this);
+		$this->getServer()->getPluginManager()->registerEvents(new TestEmojiListener(), $this);
 		/*NpcDialog::register($this);
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 

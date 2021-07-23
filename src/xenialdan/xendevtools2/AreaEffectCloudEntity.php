@@ -19,6 +19,7 @@ use pocketmine\network\mcpe\protocol\types\entity\EntityMetadataFlags;
 use pocketmine\network\mcpe\protocol\types\entity\EntityMetadataProperties;
 use pocketmine\network\mcpe\protocol\types\ParticleIds;
 use pocketmine\player\Player;
+use pocketmine\utils\Binary;
 
 class AreaEffectCloudEntity extends Entity
 {
@@ -107,6 +108,7 @@ class AreaEffectCloudEntity extends Entity
 		$properties->setInt(EntityMetadataProperties::AREA_EFFECT_CLOUD_PICKUP_COUNT, $this->PickupCount);
 		$properties->setFloat(EntityMetadataProperties::BOUNDING_BOX_HEIGHT, 1);
 		$properties->setFloat(EntityMetadataProperties::BOUNDING_BOX_WIDTH, $this->Radius * 2);
+		$properties->setInt(EntityMetadataProperties::POTION_COLOR,Binary::signInt($this->ParticleColor->toARGB()));
 		$properties->setByte(EntityMetadataProperties::POTION_AMBIENT, 1);
 	}
 
@@ -144,16 +146,16 @@ class AreaEffectCloudEntity extends Entity
 
 		if (!$this->isFlaggedForDespawn()) {
 			$this->getNetworkProperties()->setInt(EntityMetadataProperties::AREA_EFFECT_CLOUD_PARTICLE_ID, ($this->ticksLived % 2 === 0 ? ParticleIds::DRIP_WATER : ParticleIds::MOB_SPELL));//todo
-			#$color = $this->updateColor($this->ticksLived);
+			$color = $this->updateColor($this->ticksLived);
 			$type = PotionTypeIdMap::getInstance()->fromId($this->PotionId);
 			$effects = $type->getEffects();
 			foreach ($effects as $effect) {
 				$color = $effect->getColor();
 			}
-			$color = $color ?? new Color(0, 0, 0);
-			$this->getNetworkProperties()->setInt(EntityMetadataProperties::POTION_COLOR, (($color->toARGB() & 0xff) << 24) | (($color->toARGB() & 0xff) << 16) | (($color->toARGB() & 0xff) << 8) | ($color->toARGB() & 0xff));
-			$this->getNetworkProperties()->setFloat(EntityMetadataProperties::AREA_EFFECT_CLOUD_RADIUS, $this->Radius);
-			$this->getNetworkProperties()->setInt(EntityMetadataProperties::AREA_EFFECT_CLOUD_WAITING, $this->WaitTime);
+			$this->ParticleColor = $color = $color ?? new Color(0, 0, 0);
+			$this->getNetworkProperties()->setInt(EntityMetadataProperties::POTION_COLOR, Binary::signInt($this->ParticleColor->toARGB()));
+			#$this->getNetworkProperties()->setFloat(EntityMetadataProperties::AREA_EFFECT_CLOUD_RADIUS, $this->Radius);
+			#$this->getNetworkProperties()->setInt(EntityMetadataProperties::AREA_EFFECT_CLOUD_WAITING, $this->WaitTime);
 		}
 
 		return $hasUpdate;
