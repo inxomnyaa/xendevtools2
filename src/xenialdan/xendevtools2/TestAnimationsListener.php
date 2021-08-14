@@ -17,7 +17,6 @@ class TestAnimationsListener implements Listener
 		$world = $player->getServer()->getWorldManager()->getDefaultWorld();
 		if ($world !== null) {
 			$e = new NPCHuman($player->getLocation());
-			$player->getLocation()->getWorld()->addEntity($e);
 			$e->spawnToAll();
 			Loader::getInstance()->getScheduler()->scheduleRepeatingTask(new ClosureTask(static function () use ($e, $player): void {
 				if (!$player->isOnline()) {
