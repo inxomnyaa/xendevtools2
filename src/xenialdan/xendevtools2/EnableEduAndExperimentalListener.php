@@ -15,8 +15,8 @@ class EnableEduAndExperimentalListener implements Listener
 	{
 		foreach ($event->getPackets() as $packet) {
 			if ($packet instanceof StartGamePacket) {
-				$packet->hasEduFeaturesEnabled = true;
-				$packet->experimentalGameplayOverride = true;
+				$packet->levelSettings->hasEduFeaturesEnabled = true;
+				$packet->levelSettings->experimentalGameplayOverride = true;
 			}
 		}
 	}
